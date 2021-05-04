@@ -54,6 +54,10 @@ public class SearchResultPage extends BaseElement {
     @FindBy(xpath = "//label[contains(@for, '64')]")
     private WebElement memoryCheckBox;
 
+    //Кнопка додавання до конрзини
+    @FindBy(xpath = "(//button[contains(@class, 'goods-tile__buy-button')])[1]")
+    private WebElement addToChartButton;
+
     public SearchResultPage(WebDriver driver) {
         super(driver);
     }
@@ -106,6 +110,10 @@ public class SearchResultPage extends BaseElement {
     public void chooseMemoryCheckBox(){
         scrollToElement(memoryCheckBox);
         memoryCheckBox.click();
+    }
+
+    public void clickAddToCartButton(){
+        addToChartButton.click();
     }
 
 }

@@ -15,6 +15,8 @@ public class HeaderElements extends BaseElement {
     //локатор кнопки "Знайти"
     @FindBy(xpath = "//button[contains(@class, ' search')]")
     private WebElement searchButton;
+    @FindBy(xpath = "//span[contains(@class, 'counter')]")
+    private WebElement cartCounter;
 
     public HeaderElements(WebDriver driver) {
         super(driver);
@@ -33,6 +35,10 @@ public class HeaderElements extends BaseElement {
     public void inputSearchAndClickSearchButton(String value) {
         inputSearch(value);
         clickSearchButton();
+    }
+
+    public String getCountInChart(){
+        return cartCounter.getText();
     }
 
 }
