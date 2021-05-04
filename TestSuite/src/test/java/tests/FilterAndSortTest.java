@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 import properties.ConfProperties;
 
+import java.util.List;
+import java.util.function.Consumer;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
@@ -15,28 +18,38 @@ public class FilterAndSortTest extends BaseTest {
 
     @Test
     void checkMinPriceFilter() {
-        String correctSearchWord = ConfProperties.getProperty("correctSearchWord");
-        getHeaderElement().inputSearchAndClickSearchButton(correctSearchWord);
-        getBaseElement().waitForPageReadyState();
         Integer minPrice = 30000;
-        getSearchResultPage().inputMinPriceAndClickOkButton(minPrice.toString());
-        assertFalse(getSearchResultPage().getGoodsPrices().isEmpty());
-        for (WebElement webElement : getSearchResultPage().getGoodsPrices()) {
-            assertThat(Integer.parseInt(webElement.getText().replaceAll("\\s+", "")), greaterThan(minPrice));
-        }
+        checkFilterAndSorting(
+                () -> getSearchResultPage().inputMaxPriceAndClickOkButton(minPrice.toString()),
+                (webElements) -> {
+                    for (WebElement webElement : webElements) {
+                        assertThat(Integer.parseInt(webElement.getText().replaceAll("\\s+", "")), greaterThan(minPrice));
+                    }
+                });
     }
 
 
     @Test
     void checkMaxPriceFilter() {
+        Integer maxPrice = 40000;
+        checkFilterAndSorting(
+                () -> getSearchResultPage().inputMaxPriceAndClickOkButton(maxPrice.toString()),
+                (webElements) -> {
+                    for (WebElement webElement : webElements) {
+                        assertThat(Integer.parseInt(webElement.getText().replaceAll("\\s+", "")), lessThan(maxPrice));
+                    }
+                });
+    }
+
+    void checkFilterAndSorting(Runnable applyFilterAndSorting, Consumer<List<WebElement>> consumerAllElements) {
         String correctSearchWord = ConfProperties.getProperty("correctSearchWord");
         getHeaderElement().inputSearchAndClickSearchButton(correctSearchWord);
         getBaseElement().waitForPageReadyState();
-        Integer maxPrice = 40000;
-        getSearchResultPage().inputMaxPriceAndClickOkButton(maxPrice.toString());
+
+        applyFilterAndSorting.run();
+
         assertFalse(getSearchResultPage().getGoodsPrices().isEmpty());
-        for (WebElement webElement : getSearchResultPage().getGoodsPrices()) {
-            assertThat(Integer.parseInt(webElement.getText().replaceAll("\\s+", "")), lessThan(maxPrice));
-        }
+        consumerAllElements.accept(getSearchResultPage().getGoodsPrices());
+
     }
 }
