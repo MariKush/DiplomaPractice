@@ -8,6 +8,8 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 public class SearchResultPage extends BaseElement {
 
 
@@ -16,7 +18,7 @@ public class SearchResultPage extends BaseElement {
     @FindBy(xpath = "//span[@class='goods-tile__title']")
     private List<WebElement> goodsTitles;
 
-    //локатор, що містить повідомлення про відсутнысть результатів пошуку
+    //локатор, що містить повідомлення про відсутність результатів пошуку
     @FindBy(xpath = "//div[@class='catalog-empty']")
     private WebElement catalogEmpty;
 
@@ -33,9 +35,21 @@ public class SearchResultPage extends BaseElement {
     private WebElement priceFilterOKButton;
 
     //локатор, що містить всі ціни знайдених товарів
-    @FindBy(xpath = "//span[@class='goods-tile__price-value']")
+    @FindBy(xpath = "//div[@class='goods-tile ng-star-inserted']//span[@class='goods-tile__price-value']")
     private List<WebElement> goodsPrices;
 
+    //Вибір параметру стортування
+    @FindBy(xpath = "//select[contains(@class, 'select-css')]")
+    private WebElement selectSortOption;
+
+    //Параметр стортування від дешевих до дорогих
+    @FindBy(xpath = "//option[contains(@value, 'cheap')]")
+    private WebElement cheapFirstOption;
+
+    //Параметр стортування від дорогих до дешевих
+    @FindBy(xpath = "//option[contains(@value, 'expensive')]")
+
+    private WebElement expensiveFirstOption;
 
     public SearchResultPage(WebDriver driver) {
         super(driver);
@@ -68,8 +82,22 @@ public class SearchResultPage extends BaseElement {
         priceFilterOKButton.click();
     }
 
-    public List<WebElement> getGoodsPrices() {
-        return goodsPrices;
+    public List<Integer> getGoodsPrices() {
+        return goodsPrices.stream()
+                .map(WebElement::getText)
+                .map(text -> text.replaceAll("\\s+", ""))
+                .map(Integer::parseInt)
+                .collect(toList());
+    }
+
+    public void chooseCheapFirstSortOption() {
+        selectSortOption.click();
+        cheapFirstOption.click();
+    }
+
+    public void chooseExpensiveFirstSortOption() {
+        selectSortOption.click();
+        expensiveFirstOption.click();
     }
 
 }
