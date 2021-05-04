@@ -57,7 +57,6 @@ public class SearchTests {
         headerElements.inputSearch(correctSearchWord);
         headerElements.clickSearchButton();
         for (WebElement webElement : new SearchResultPage(driver).getGoodsTitles()) {
-            System.out.println(webElement.getText());
             assertThat(webElement.getText(), containsStringIgnoringCase(correctSearchWord));
         }
     }

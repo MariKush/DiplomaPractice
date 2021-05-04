@@ -50,6 +50,7 @@ public class SearchResultPage {
 
     //метод введення значення в поле мінімальної ціни
     public void inputMinPrice(String value) {
+        minPriceInput.clear();
         minPriceInput.sendKeys(value);
     }
 
@@ -59,7 +60,7 @@ public class SearchResultPage {
     }
 
     //метод натискання на кнопку "OK" фільтра ціни
-    public void clickSearchButton() {
+    public void clickPriceFilterOKButton() {
         priceFilterOKButton.click();
     }
 
