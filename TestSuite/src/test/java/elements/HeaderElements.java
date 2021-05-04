@@ -4,9 +4,8 @@ package elements;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class HeaderElements {
+public class HeaderElements extends BaseElement {
 
 
     public WebDriver driver;
@@ -18,8 +17,7 @@ public class HeaderElements {
     private WebElement searchButton;
 
     public HeaderElements(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
+        super(driver);
     }
 
     //метод введення значення в поле пошуку
@@ -30,6 +28,11 @@ public class HeaderElements {
     //метод натискання на кнопку "Пошук"
     public void clickSearchButton() {
         searchButton.click();
+    }
+
+    public void inputSearchAndClickSearchButton(String value) {
+        inputSearch(value);
+        clickSearchButton();
     }
 
 }

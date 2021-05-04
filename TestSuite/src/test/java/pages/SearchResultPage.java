@@ -1,14 +1,16 @@
 package pages;
 
 
+import elements.BaseElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class SearchResultPage {
+public class SearchResultPage extends BaseElement {
+
+
     public WebDriver driver;
     //локатор, що містить всі заголовки знайдених товарів
     @FindBy(xpath = "//span[@class='goods-tile__title']")
@@ -36,8 +38,7 @@ public class SearchResultPage {
 
 
     public SearchResultPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
+        super(driver);
     }
 
     public List<WebElement> getGoodsTitles() {
@@ -49,14 +50,17 @@ public class SearchResultPage {
     }
 
     //метод введення значення в поле мінімальної ціни
-    public void inputMinPrice(String value) {
+    public void inputMinPriceAndClickOkButton(String value) {
         minPriceInput.clear();
         minPriceInput.sendKeys(value);
+        priceFilterOKButton.click();
     }
 
     //метод введення значення в поле максимальної ціни
-    public void inputMaxPrice(String value) {
+    public void inputMaxPriceAndClickOkButton(String value) {
+        maxPriceInput.clear();
         maxPriceInput.sendKeys(value);
+        priceFilterOKButton.click();
     }
 
     //метод натискання на кнопку "OK" фільтра ціни
