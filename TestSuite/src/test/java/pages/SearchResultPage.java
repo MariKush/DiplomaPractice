@@ -48,8 +48,11 @@ public class SearchResultPage extends BaseElement {
 
     //Параметр стортування від дорогих до дешевих
     @FindBy(xpath = "//option[contains(@value, 'expensive')]")
-
     private WebElement expensiveFirstOption;
+
+    //64 ГБ чек-бокс
+    @FindBy(xpath = "//label[contains(@for, '64')]")
+    private WebElement memoryCheckBox;
 
     public SearchResultPage(WebDriver driver) {
         super(driver);
@@ -98,6 +101,11 @@ public class SearchResultPage extends BaseElement {
     public void chooseExpensiveFirstSortOption() {
         selectSortOption.click();
         expensiveFirstOption.click();
+    }
+
+    public void chooseMemoryCheckBox(){
+        scrollToElement(memoryCheckBox);
+        memoryCheckBox.click();
     }
 
 }

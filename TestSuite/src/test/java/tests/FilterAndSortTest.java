@@ -3,13 +3,14 @@ package tests;
 
 import com.google.common.collect.Comparators;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebElement;
 import properties.ConfProperties;
 
 import java.util.Comparator;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -54,6 +55,18 @@ public class FilterAndSortTest extends BaseTest {
         checkFilterAndSorting(
                 () -> getSearchResultPage().chooseExpensiveFirstSortOption(),
                 () -> assertTrue(Comparators.isInOrder(getSearchResultPage().getGoodsPrices(), Comparator.reverseOrder())));
+    }
+
+    @Test
+    void checkMemoryFilter() {
+        checkFilterAndSorting(
+                () -> getSearchResultPage().chooseMemoryCheckBox(),
+                () -> {
+                    for (WebElement webElement : getSearchResultPage().getGoodsTitles()) {
+                        assertThat(webElement.getText(),
+                                anyOf(containsString("64 GB"), containsString("64GB")));
+                    }
+                });
     }
 
     void checkFilterAndSorting(Runnable applyFilterAndSorting, Runnable consumerAllElements) {
