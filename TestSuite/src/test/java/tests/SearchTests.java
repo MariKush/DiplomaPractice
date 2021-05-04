@@ -1,14 +1,19 @@
+package tests;
+
+
+import elements.HeaderElements;
+import pages.SearchResultPage;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import properties.ConfProperties;
 
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.containsStringIgnoringCase;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SearchTests {
 
@@ -62,9 +67,9 @@ public class SearchTests {
         String wrongSearchWord = ConfProperties.getProperty("wrongSearchWord");
         headerElements.inputSearch(wrongSearchWord);
         headerElements.clickSearchButton();
-        assertTrue(new SearchResultPage(driver).getGoodsTitles().isEmpty());
-        assertTrue(new SearchResultPage(driver).catalogEmptyMessageExist());
-        
+        Assertions.assertTrue(new SearchResultPage(driver).getGoodsTitles().isEmpty());
+        Assertions.assertTrue(new SearchResultPage(driver).catalogEmptyMessageExist());
+
     }
 
 }
