@@ -49,6 +49,11 @@ public class BaseElement {
         wait.until(ExpectedConditions.textToBePresentInElement(element, text));
     }
 
+    public void waitForElementTextBeChanged(long timeout, WebElement element, String text) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(element, text)));
+    }
+
     public void scrollToElement(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoViewIfNeeded(true);", element);
     }

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pages.CartPage;
 import pages.SearchResultPage;
 import properties.ConfProperties;
 
@@ -44,11 +45,23 @@ public class BaseTest {
     public BaseElement getBaseElement() {
         return new BaseElement(driver);
     }
+
     public SearchResultPage getSearchResultPage() {
         return new SearchResultPage(driver);
+    }
+
+    public CartPage getCartPage() {
+        return new CartPage(driver);
     }
 
     public String getURL() {
         return driver.getCurrentUrl();
     }
+
+    protected void searchPropertyAndWait(String property) {
+        String correctSearchWord = ConfProperties.getProperty(property);
+        getHeaderElement().inputSearchAndClickSearchButton(correctSearchWord);
+        getBaseElement().waitForPageReadyState();
+    }
+
 }

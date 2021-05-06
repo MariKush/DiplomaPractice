@@ -4,7 +4,6 @@ package tests;
 import com.google.common.collect.Comparators;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
-import properties.ConfProperties;
 
 import java.util.Comparator;
 
@@ -70,9 +69,7 @@ public class FilterAndSortTest extends BaseTest {
     }
 
     void checkFilterAndSorting(Runnable applyFilterAndSorting, Runnable consumerAllElements) {
-        String correctSearchWord = ConfProperties.getProperty("correctSearchWord");
-        getHeaderElement().inputSearchAndClickSearchButton(correctSearchWord);
-        getBaseElement().waitForPageReadyState();
+        searchPropertyAndWait("correctSearchWord");
 
         applyFilterAndSorting.run();
 

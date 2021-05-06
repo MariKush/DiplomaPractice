@@ -17,6 +17,8 @@ public class HeaderElements extends BaseElement {
     private WebElement searchButton;
     @FindBy(xpath = "//span[contains(@class, 'counter')]")
     private WebElement cartCounter;
+    @FindBy(xpath = "//button[contains(@class, 'header__button--active')]")
+    private WebElement cartButton;
 
     public HeaderElements(WebDriver driver) {
         super(driver);
@@ -40,5 +42,11 @@ public class HeaderElements extends BaseElement {
     public String getCountInChart(){
         return cartCounter.getText();
     }
+
+    public void clickOpenCartButton(){
+        cartButton.click();
+    }
+
+
 
 }
