@@ -58,6 +58,10 @@ public class SearchResultPage extends BaseElement {
     @FindBy(xpath = "(//button[contains(@class, 'goods-tile__buy-button')])[1]")
     private WebElement addToCartButton;
 
+    //Кнопка додавання до конрзини
+    @FindBy(xpath = "(//button[contains(@class, 'goods-tile__buy-button')])[2]")
+    private WebElement secondAddToCartButton;
+
     public SearchResultPage(WebDriver driver) {
         super(driver);
     }
@@ -116,12 +120,7 @@ public class SearchResultPage extends BaseElement {
         addToCartButton.click();
     }
 
-    public WebElement getFirstGoodTitle(){
-        return getGoodsTitles().get(0);
+    public void clickSecondAddToCartButton(){
+        secondAddToCartButton.click();
     }
-
-    public Integer getFirstGoodPrice(){
-        return getGoodsPrices().get(0);
-    }
-
 }

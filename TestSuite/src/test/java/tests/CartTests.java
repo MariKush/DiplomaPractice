@@ -19,8 +19,8 @@ public class CartTests extends BaseTest {
     @Test
     void checkItemInCart() {
         searchPropertyAndWait("correctSearchWord");
-        String goodTitle = getSearchResultPage().getFirstGoodTitle().getText();
-        Integer goodPrice = getSearchResultPage().getFirstGoodPrice();
+        String goodTitle = getSearchResultPage().getGoodsTitles().get(0).getText();
+        Integer goodPrice = getSearchResultPage().getGoodsPrices().get(0);
         getSearchResultPage().clickAddToCartButton();
         getHeaderElement().clickOpenCartButton();
         getBaseElement().waitForPageReadyState();
@@ -32,7 +32,7 @@ public class CartTests extends BaseTest {
     @Test
     void checkSumAfterChangingQuantityOfGoods() {
         searchPropertyAndWait("correctSearchWord");
-        Integer goodPrice = getSearchResultPage().getFirstGoodPrice();
+        Integer goodPrice = getSearchResultPage().getGoodsPrices().get(0);
 
         getSearchResultPage().clickAddToCartButton();
         getHeaderElement().clickOpenCartButton();
@@ -50,4 +50,32 @@ public class CartTests extends BaseTest {
         assertEquals(goodPrice, getCartPage().getSumPriceValue());
     }
 
+    @Test
+    void checkAddDifferentGoodsToChartsAndCheckPrice() {
+        searchPropertyAndWait("correctSearchWord");
+        Integer firstGoodPrice = getSearchResultPage().getGoodsPrices().get(0);
+        Integer secondGoodPrice = getSearchResultPage().getGoodsPrices().get(1);
+
+        getSearchResultPage().clickAddToCartButton();
+        getSearchResultPage().clickSecondAddToCartButton();
+        getHeaderElement().clickOpenCartButton();
+        getBaseElement().waitForPageReadyState();
+
+        assertEquals(firstGoodPrice + secondGoodPrice, getCartPage().getSumPriceValue());
+    }
+
+    @Test
+    void checkDeleteGoodFromChart() {
+        searchPropertyAndWait("correctSearchWord");
+
+        getSearchResultPage().clickAddToCartButton();
+        getHeaderElement().clickOpenCartButton();
+        getBaseElement().waitForPageReadyState();
+
+        getCartPage().clickGoodActionButton();
+        getCartPage().waitForDeleteGoodButtonVisibility();
+        getCartPage().clickDeleteGoodButton();
+
+        getCartPage().checkEmptyChartIsPresented();
+    }
 }

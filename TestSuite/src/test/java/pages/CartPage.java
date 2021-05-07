@@ -26,6 +26,12 @@ public class CartPage extends BaseElement {
     private WebElement addOneMoreGood;
     @FindBy(xpath = "//button[contains(@class, 'cart-counter__button')][1]")
     private WebElement subtractOneGood;
+    @FindBy(xpath = "//button[@id='cartProductActions0']")
+    private WebElement goodActionButton;
+    @FindBy(xpath = "//button[contains(@class, 'actions')]")
+    private WebElement deleteGoodButton;
+    @FindBy(xpath = "//div[contains(@class, 'cart-dummy')]")
+    private WebElement emptyChart;
 
     public CartPage(WebDriver driver) {
         super(driver);
@@ -51,7 +57,23 @@ public class CartPage extends BaseElement {
         subtractOneGood.click();
     }
 
+    public void clickGoodActionButton() {
+        goodActionButton.click();
+    }
+
+    public void clickDeleteGoodButton() {
+        deleteGoodButton.click();
+    }
+
     public Integer getSumPriceValue() {
         return Integer.parseInt(sumPrice.getText());
+    }
+
+    public void waitForDeleteGoodButtonVisibility(){
+        waitForElementVisibility(5, deleteGoodButton);
+    }
+
+    public void checkEmptyChartIsPresented(){
+        waitForElementVisibility(5, emptyChart);
     }
 }
