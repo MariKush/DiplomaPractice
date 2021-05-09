@@ -50,9 +50,7 @@ public class BaseTest {
         return new SearchResultPage(driver);
     }
 
-    public CartPage getCartPage() {
-        return new CartPage(driver);
-    }
+    public CartPage getCartPage() { return new CartPage(driver); }
 
     public String getURL() {
         return driver.getCurrentUrl();

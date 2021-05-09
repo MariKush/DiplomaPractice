@@ -14,10 +14,8 @@ public class CartPage extends BaseElement {
 
     @FindBy(xpath = "//a[@class='cart-product__title']")
     private WebElement goodTitle;
-
     @FindBy(xpath = "//p[@class='cart-product__price']")
     private WebElement goodPrice;
-
     @FindBy(xpath = "//input[contains(@class, 'cart-counter')]")
     private WebElement cartCounter;
     @FindBy(xpath = "//div[@class='cart-receipt__sum-price']/span[1]")
@@ -41,9 +39,7 @@ public class CartPage extends BaseElement {
         return sumPrice;
     }
 
-    public String getGoodTitle() {
-        return goodTitle.getText();
-    }
+    public String getGoodTitle() { return goodTitle.getText(); }
 
     public Integer getGoodPrice() {
         return Integer.parseInt(goodPrice.getText().replaceAll("[^0-9.]", ""));
@@ -69,11 +65,8 @@ public class CartPage extends BaseElement {
         return Integer.parseInt(sumPrice.getText());
     }
 
-    public void waitForDeleteGoodButtonVisibility(){
-        waitForElementVisibility(5, deleteGoodButton);
-    }
+    public void waitForDeleteGoodButtonVisibility() { waitForElementVisibility(5, deleteGoodButton); }
 
-    public void checkEmptyChartIsPresented(){
-        waitForElementVisibility(5, emptyChart);
+    public void checkEmptyChartIsPresented() { waitForElementVisibility(5, emptyChart);
     }
 }
